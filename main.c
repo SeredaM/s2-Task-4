@@ -89,22 +89,23 @@ typedef struct node
  void popid (list **head,int del_id)
 {
     list *tmp = *head;
-    list *target;
+    list *prev;
     if ((*head)->id == del_id)
     {
         pop(head);
         return;
     }
-    while (tmp -> next -> id != del_id)
+    while (tmp -> id != del_id)
+    {
+        prev = tmp;
         tmp = tmp -> next;
-    if (tmp -> next -> next == NULL)
+    }
+    if (tmp -> next == NULL)
     {
         poplast(head);
-        return;
     }
-    target= tmp -> next;
-    tmp -> next = tmp -> next -> next;
-    free(target);
+    prev -> next = tmp -> next;
+    free(tmp);
 
 }
 
