@@ -75,14 +75,16 @@ typedef struct node
 
  void poplast(list *head)
 {
-  list *tmp;
-  while (head -> next != NULL)
+  list *prev;
+ list *tmp=head;
+  while (tmp->next != NULL)
+
   {
-      tmp = head;
-      head = head -> next;
+      prev=tmp;
+      tmp=tmp ->next;
   }
-  tmp -> next = NULL;
-  free(head);
+  free(tmp);
+  prev->next = NULL;
 
 }
 
@@ -102,7 +104,7 @@ typedef struct node
     }
     if (tmp -> next == NULL)
     {
-        poplast(head);
+        poplast(*head);
     }
     prev -> next = tmp -> next;
     free(tmp);
@@ -121,7 +123,12 @@ void popneg (list **head)
             popid(head,check -> id);
     }
     if (tmp -> id < 0)
+    {
+        if ((*head)->next!=NULL)
         poplast(*head);
+        else
+        pop(head);
+    }
 }
 list *randoml()
 {
@@ -170,7 +177,10 @@ void main()
     case 3:
         printf("¬ведите id элемента \n");
         scanf("%d",&id);
+        if (L!=NULL)
         pushback(L,id);
+        else
+            push(&L,id);
         break;
     case 4:
         printf("¬ведите id элемента который хотите добавить \n");
@@ -190,7 +200,10 @@ void main()
         pop(&L);
         break;
     case 7:
+        if (L->next!=NULL)
         poplast(L);
+        else
+            pop(&L);
         break;
     case 8:
         printf("¬ведите id элемента который хотите удалить \n");
